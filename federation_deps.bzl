@@ -6,9 +6,9 @@ def federation_deps():
 # ********** com_google_absl *****************
     http_archive(
       name = "com_google_absl",
-      urls = ["https://github.com/abseil/abseil-cpp/archive/8efba58a3b656e9b41fb0471ae6453425a61c520.zip"],  # 2019-08-08T15:25:03Z
-      strip_prefix = "abseil-cpp-8efba58a3b656e9b41fb0471ae6453425a61c520",
-      sha256 = "eab5092f5a61c44b82b86588fede5b79b76994c6799eb70792486d7db6d4726a",
+      urls = ["https://github.com/abseil/abseil-cpp/archive/9ee91d3e430fb33a4590486573792eb0fa146c2d.zip"],  # 2019-08-08T18:07:16Z
+      strip_prefix = "abseil-cpp-9ee91d3e430fb33a4590486573792eb0fa146c2d",
+      sha256 = "5a027970fac1ca24739ad8392d07ba54921f6dfdb619909b593a83a52c0f5afb",
 )
 
 # ********** com_google_googletest *****************
