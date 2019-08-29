@@ -3,16 +3,16 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def federation_deps():
-    http_archive(		
-      name = "rules_cc",		
-      strip_prefix = "rules_cc-master",		
-      urls = ["https://github.com/bazelbuild/rules_cc/archive/master.zip"],		
-    )		
+    http_archive(
+        name = "rules_cc",
+        strip_prefix = "rules_cc-master",
+        urls = ["https://github.com/bazelbuild/rules_cc/archive/master.zip"],
+    )
 
-    http_archive(		
-      name = "rules_python",		
-      strip_prefix = "rules_python-master",		
-      urls = ["https://github.com/bazelbuild/rules_python/archive/master.zip"],		
+    http_archive(
+        name = "rules_python",
+        strip_prefix = "rules_python-master",
+        urls = ["https://github.com/bazelbuild/rules_python/archive/master.zip"],
     )
 
 # ********** com_google_absl *****************
