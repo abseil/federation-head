@@ -18,9 +18,9 @@ def federation_deps():
 # ********** com_google_absl *****************
     http_archive(
       name = "com_google_absl",
-      urls = ["https://github.com/abseil/abseil-cpp/archive/6ec136281086b71da32b5fb068bd6e46b78a5c79.zip"],  # 2019-09-17T21:29:05Z
-      strip_prefix = "abseil-cpp-6ec136281086b71da32b5fb068bd6e46b78a5c79",
-      sha256 = "49e7e906a964a37255852eac2fbfee1eaf173231c547df2ad6c3527e93d521f0",
+      urls = ["https://github.com/abseil/abseil-cpp/archive/ccdd1d57b6386ebc26fb0c7d99b604672437c124.zip"],  # 2019-09-20T14:40:36Z
+      strip_prefix = "abseil-cpp-ccdd1d57b6386ebc26fb0c7d99b604672437c124",
+      sha256 = "a463a791e1b5eaad461956495401357efb792fcdbf47b5737ec420bb54c804b6",
 )
 
 # ********** com_google_googletest *****************
@@ -34,9 +34,9 @@ def federation_deps():
 # ********** com_github_google_benchmark *****************
     http_archive(
       name = "com_github_google_benchmark",
-      urls = ["https://github.com/google/benchmark/archive/bf4f2ea0bd1180b34718ac26eb79b170a4f6290e.zip"],  # 2019-09-16T08:05:05Z
-      strip_prefix = "benchmark-bf4f2ea0bd1180b34718ac26eb79b170a4f6290e",
-      sha256 = "e474a7f0112b9f2cd7e26ccd03c39d1c68114d3cad8f292021143b548fb00db7",
+      urls = ["https://github.com/google/benchmark/archive/e7e3d976ef7d89ffc6bd6a53a6ea13ec35bb411d.zip"],  # 2019-09-21T20:55:05Z
+      strip_prefix = "benchmark-e7e3d976ef7d89ffc6bd6a53a6ea13ec35bb411d",
+      sha256 = "50d92697e0ac82430a79e48579aff989d9e3861d0d5fb8366859624d2e2753b0",
 )
 
     # zlib pinned to 1.2.11
