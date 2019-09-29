@@ -26,17 +26,17 @@ def federation_deps():
 # ********** com_google_googletest *****************
     http_archive(
       name = "com_google_googletest",
-      urls = ["https://github.com/google/googletest/archive/f2fb48c3b3d79a75a88a99fba6576b25d42ec528.zip"],  # 2019-09-16T15:47:35Z
-      strip_prefix = "googletest-f2fb48c3b3d79a75a88a99fba6576b25d42ec528",
-      sha256 = "89e98c265b80181d902b1a19c10c29b3a22d804b207214d8104ad42905fbae87",
+      urls = ["https://github.com/google/googletest/archive/72adf7a4155b6642da1e6761678fe546590c0269.zip"],  # 2019-09-27T20:48:42Z
+      strip_prefix = "googletest-72adf7a4155b6642da1e6761678fe546590c0269",
+      sha256 = "4a57fd68265d11fed174ccfe88039472df067a4ff8423b61db8798024d7459e4",
 )
 
 # ********** com_github_google_benchmark *****************
     http_archive(
       name = "com_github_google_benchmark",
-      urls = ["https://github.com/google/benchmark/archive/b874e72208b6e21b62287942e5e3b11f6630107f.zip"],  # 2019-09-23T09:53:09Z
-      strip_prefix = "benchmark-b874e72208b6e21b62287942e5e3b11f6630107f",
-      sha256 = "25f331d18e1f3065dbfac5b1aae4c55480e556f801259130be0d8fdd158a6b46",
+      urls = ["https://github.com/google/benchmark/archive/b8bce0c7ed4e02426fa4de21fec385fbaa84a7b2.zip"],  # 2019-09-27T11:09:23Z
+      strip_prefix = "benchmark-b8bce0c7ed4e02426fa4de21fec385fbaa84a7b2",
+      sha256 = "06601ff8df8f3121b53053c5acdea69cf8a3f5cd2ae46097599369c98e6babbf",
 )
 
     # zlib pinned to 1.2.11
