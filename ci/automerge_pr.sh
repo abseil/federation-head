@@ -49,45 +49,54 @@ for std in ${STD}; do
 done
 
 
-# echo "************************ CLANG FEDERATION SMOKE TESTS ************************"
+echo "************************ CLANG FEDERATION SMOKE TESTS ************************"
 
-# docker run  \
-# --volume="${BUILD_ROOT}:/repo_root:ro"  \
-# --workdir=/repo_root/test \
-# --cap-add=SYS_PTRACE \
-# --rm \
-# -e CC="/opt/llvm/clang/bin/clang" \
-# -e BAZEL_COMPILER="llvm" \
-# "${CLANG_DOCKER}" /usr/local/bin/bazel test ...
+for std in ${STD}; do
+  docker run  \
+  --volume="${BUILD_ROOT}:/repo_root:ro"  \
+  --workdir=/repo_root/test \
+  --cap-add=SYS_PTRACE \
+  --rm \
+  -e CC="/opt/llvm/clang/bin/clang" \
+  -e BAZEL_COMPILER="llvm" \
+  -e BAZEL_CXXOPTS="-std=${std}" \
+  "${CLANG_DOCKER}" \
+  /usr/local/bin/bazel test ... \
+    --copt=-Werror \
+    --keep_going \
+    --show_timestamps \
+    --test_output=errors
+done
+
 
 
 
 # echo "************************ FEDERATION SMOKE TESTS ************************"
-
 # docker run  --volume="${BUILD_ROOT}:/repo_root:ro"  --workdir=/repo_root/test "${DOCKER_CONTAINER}" /usr/local/bin/bazel test ...
 
 # echo "************************ GOOGLETST TESTS ************************"
-
 # docker run  --volume="${BUILD_ROOT}:/repo_root:ro"  --workdir=/repo_root/test "${DOCKER_CONTAINER}" /usr/local/bin/bazel test @com_google_googletest//googletest/...:all --define absl=1
 
 # echo "************************ BENCHMARK TESTS ************************"
-
 # docker run  --volume="${BUILD_ROOT}:/repo_root:ro"  --workdir=/repo_root/test "${DOCKER_CONTAINER}" /usr/local/bin/bazel test @com_github_google_benchmark//test/...:all
 
 # echo "************************ ABSEIL TESTS ************************"
-
 # docker run  --volume="${BUILD_ROOT}:/test:ro"  --workdir=/test/test "${DOCKER_CONTAINER}" /usr/local/bin/bazel test @com_google_absl//absl/...:all --test_output=errors --test_tag_filters=-benchmark
 
-#The following variables will be defined when running on Kokoro
-KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro=73
-KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro=f4277382c5d14380a2220c69f0867324f9d8efa4
 
+
+# The following variables will be defined when running on Kokoro
+# KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro
+# KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokorof4277382c5d14380a2220c69f0867324f9d8efa4
+
+GITHUB_ACCESS_URL="$(cat "$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token)"
+
+
+# Merge this PR if the tests above PASS
 generate_post_data()
 {
 cat <<EOF
 {"commit_title":"Test Please ignore - Merging PR ${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}", "commit_message": "Test, Please Ignore - Virtual Head Update","sha":"$KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro", "merge_method":"merge"}
 EOF
 }
-
-
-curl --user "absl-federation-github:769bdca54b423a58b570b41d5976666cd15e3f2b" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}"/merge
+curl --user "${GITHUB_ACCESS_URL}" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}"/merge
