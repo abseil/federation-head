@@ -135,12 +135,11 @@ EOF
 # KOKORO_KEYSTORE_DIR
 # For testing outside Kokoro set them in your test environment
 
-NETRC_FILE="$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile
-
 # AUTOMERGE variable will be set on Kokoro
 # For testing outside Kokoro set it in your test environment
 if [ ${AUTOMERGE:-0} -ne 0 ]; then
-  echo "AUTO_MERGE is set: ${AUTOMERGE}, Proceeding with PR merge..."
+  echo "AUTOMERGE is set: ${AUTOMERGE}, Proceeding with PR merge..."
+  NETRC_FILE="$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile
   curl --netrc-file "${NETRC_FILE}" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}"/merge
 else
   echo "AUTOMERGE is not set, Skipping PR merge..."
