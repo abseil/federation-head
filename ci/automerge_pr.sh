@@ -129,6 +129,15 @@ cat <<EOF
 EOF
 }
 
+RELEASE_TAG=$("date" +%d-%b-%Y-daily)
+generate_post_data_create_github_release()
+{
+cat <<EOF
+{"tag_name":"$RELEASE_TAG", "target_commitish": "master","name":"$RELEASE_TAG"}
+EOF
+}
+
+
 # The following variables will be defined when running on Kokoro
 # KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro
 # KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro
@@ -141,6 +150,10 @@ if [ ${AUTOMERGE:-0} -ne 0 ]; then
   echo "AUTOMERGE is set: ${AUTOMERGE}, Proceeding with PR merge..."
   NETRC_FILE="$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile
   curl --netrc-file "${NETRC_FILE}" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}"/merge
+
+  echo "PR Merge has been completed, Proceeding with GitHub Release..."
+  curl --netrc-file "${NETRC_FILE}" -X POST --data "$(generate_post_data_create_github_release)" https://api.github.com/repos/abseil/federation-head/releases
+
 else
   echo "AUTOMERGE is not set, Skipping PR merge..."
 fi
