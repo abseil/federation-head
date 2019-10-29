@@ -129,7 +129,7 @@ cat <<EOF
 EOF
 }
 
-RELEASE_TAG=$("date" +%d-%b-%Y-daily)
+RELEASE_TAG=$("date" +%Y-%m-%d-daily)
 generate_post_data_create_github_release()
 {
 cat <<EOF
