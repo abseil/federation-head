@@ -11,7 +11,7 @@ urllib3.disable_warnings()
 
 HTTP_ARCHIVE_TEMPLATE = """    http_archive(
       name = "{}",
-      urls = ["{}"],  # {}
+      urls = ["{}","{}"],  # {}
       strip_prefix = "{}-{}",
       sha256 = "{}",
 )"""
@@ -44,7 +44,7 @@ class GitHubProject(ExternalDependency):
     request = http.request('GET', url,
                            headers = { 'User-Agent': 'Workspace Updater' })
     sha256 = hashlib.sha256(request.data).hexdigest()
-    return HTTP_ARCHIVE_TEMPLATE.format(project.name, url, date, project.repo,
+    return HTTP_ARCHIVE_TEMPLATE.format(project.name, url,url, date, project.repo,
                                         commit, sha256)
 
 
