@@ -87,14 +87,14 @@ done
 generate_post_data()
 {
 cat <<EOF
-{"commit_title":"Auto-Merge of PR ${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}", "commit_message": "Virtual Head Update","sha":"$KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro", "merge_method":"merge"}
+{"commit_title":"Auto-Merge of PR ${KOKORO_GITHUB_PULL_REQUEST_NUMBER}", "commit_message": "Virtual Head Update","sha":"$KOKORO_GITHUB_PULL_REQUEST_COMMIT", "merge_method":"merge"}
 EOF
 }
 
 if [ ${AUTOMERGE:-0} -ne 0 ]; then
   # The following variables will be defined when running on Kokoro
-  # KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro
-  # KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro
+  # KOKORO_GITHUB_PULL_REQUEST_NUMBER
+  # KOKORO_GITHUB_PULL_REQUEST_COMMIT
   echo "AUTO_MERGE is set: ${AUTO_MERGE}, Proceeding with PR merge..."
   cp "$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile ~/.netrc
   chmod 600 ~/.netrc
