@@ -125,7 +125,7 @@ done
 generate_post_data()
 {
 cat <<EOF
-{"commit_title":"Auto-Merge of PR ${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}", "commit_message": "Virtual Head Update","sha":"$KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro", "merge_method":"merge"}
+{"commit_title":"Auto-Merge of PR ${KOKORO_GITHUB_PULL_REQUEST_NUMBER}", "commit_message": "Virtual Head Update","sha":"$KOKORO_GITHUB_PULL_REQUEST_COMMIT", "merge_method":"merge"}
 EOF
 }
 
@@ -139,8 +139,8 @@ EOF
 
 
 # The following variables will be defined when running on Kokoro
-# KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro
-# KOKORO_GITHUB_PULL_REQUEST_COMMIT_kokoro
+# KOKORO_GITHUB_PULL_REQUEST_NUMBER
+# KOKORO_GITHUB_PULL_REQUEST_COMMIT
 # KOKORO_KEYSTORE_DIR
 # For testing outside Kokoro set them in your test environment
 
@@ -149,7 +149,7 @@ EOF
 if [ ${AUTOMERGE:-0} -ne 0 ]; then
   echo "AUTOMERGE is set: ${AUTOMERGE}, Proceeding with PR merge..."
   NETRC_FILE="$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile
-  curl --netrc-file "${NETRC_FILE}" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER_kokoro}"/merge
+  curl --netrc-file "${NETRC_FILE}" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER}"/merge
 
   echo "PR Merge has been completed, Proceeding with GitHub Release..."
   curl --netrc-file "${NETRC_FILE}" -X POST --data "$(generate_post_data_create_github_release)" https://api.github.com/repos/abseil/federation-head/releases
