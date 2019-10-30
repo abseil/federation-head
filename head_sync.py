@@ -11,7 +11,7 @@ urllib3.disable_warnings()
 
 HTTP_ARCHIVE_TEMPLATE = """    http_archive(
       name = "{}",
-      urls = ["{}","{}"],  # {} use the same urL twice to trick bazel into re-trying if connection fails
+      urls = ["{}","{}"],  # {} use the same URL twice to trick bazel into re-trying if connection fails
       strip_prefix = "{}-{}",
       sha256 = "{}",
 )"""
