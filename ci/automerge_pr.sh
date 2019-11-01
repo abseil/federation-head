@@ -149,10 +149,25 @@ EOF
 if [ ${AUTOMERGE:-0} -ne 0 ]; then
   echo "AUTOMERGE is set: ${AUTOMERGE}, Proceeding with PR merge..."
   NETRC_FILE="$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile
-  curl --netrc-file "${NETRC_FILE}" -X PUT --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER}"/merge
+  GITHUB_API_STATUS=$(curl --netrc-file "${NETRC_FILE}" -s -o response.txt -i -w '%{http_code}' -X PUT  --data "$(generate_post_data)" https://api.github.com/repos/abseil/federation-head/pulls/"${KOKORO_GITHUB_PULL_REQUEST_NUMBER}"/merge )
 
+  if [ ${GITHUB_API_STATUS} -ne 200 ]; then
+    echo "Build Successful but PR Merge failed. See GitHub response below:"
+    cat response.txt
+    echo "Terminating with -1"
+    exit -1
+  fi
   echo "PR Merge has been completed, Proceeding with GitHub Release..."
-  curl --netrc-file "${NETRC_FILE}" -X POST --data "$(generate_post_data_create_github_release)" https://api.github.com/repos/abseil/federation-head/releases
+
+  GITHUB_API_STATUS=$(curl --netrc-file "${NETRC_FILE}" -s -o response1.txt -i -w '%{http_code}' -X POST --data "$(generate_post_data_create_github_release)" https://api.github.com/repos/abseil/federation-head/releases)
+
+  if [ ${GITHUB_API_STATUS} -ne 201 ]; then
+    echo "GitHub Merge was Successful but making a GitHub Release failed. See GitHub response below:"
+    cat response1.txt
+    echo "Terminating with -1"
+    exit -1
+  fi
+  echo "PR Merge has been completed, Proceeding with GitHub Release..."
 
 else
   echo "AUTOMERGE is not set, Skipping PR merge..."
