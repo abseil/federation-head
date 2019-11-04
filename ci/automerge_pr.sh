@@ -20,6 +20,20 @@
 
 set -euox pipefail
 
+CURL_HTTP_STATUS=$(curl -s -o response.txt -w '%{http_code}' https://api.github.com/repos/abseil/federation-head/pulls/${KOKORO_GITHUB_PULL_REQUEST_NUMBER})
+if [ ${CURL_HTTP_STATUS} -ne 200 ]; then
+  echo "Failed to get GitHub Pull Request ${KOKORO_GITHUB_PULL_REQUEST_NUMBER}. See GitHub response below:"
+  cat response.txt
+  echo "Terminating with -1"
+  exit -1
+fi
+GITHUB_PR_AUTHOR=$(cat response.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['user']['login'])")
+if [ ${GITHUB_PR_AUTHOR} != $ALLOWED_AUTOMERGE_PR_AUTHOR ]; then
+  echo "Only ${ALLOWED_AUTOMERGE_PR_AUTHOR} is allowed to Auto-Merge. This PR is authored by ${GITHUB_PR_AUTHOR}. Exiting with -1..."
+  exit -1
+fi
+echo "PR Author ${GITHUB_PR_AUTHOR} valid. Proceeding..."
+
 BUILD_ROOT="$(realpath $(dirname ${0})/..)"
 
 readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_gcc-latest:20190703"
