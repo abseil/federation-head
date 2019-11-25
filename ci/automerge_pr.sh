@@ -90,7 +90,7 @@ for std in ${STD}; do
   @com_google_googletest//googletest/...:all \
   @com_github_google_benchmark//test/...:all \
     --define absl=1 \
-    --test_tag_filters=-benchmark \
+    --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
     --show_timestamps \
     --test_output=errors
@@ -113,7 +113,7 @@ for std in ${STD}; do
   @com_google_googletest//googletest/...:all \
   @com_github_google_benchmark//test/...:all \
     --define absl=1 \
-    --test_tag_filters=-benchmark \
+    --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
     --show_timestamps \
     --test_output=errors
