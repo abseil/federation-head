@@ -157,10 +157,11 @@ if [ ${AUTOMERGE:-0} -ne 0 ]; then
     exit -1
   fi
   GITHUB_PR_AUTHOR=$(cat response0.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['user']['login'])")
-  if [ ${GITHUB_PR_AUTHOR} != $ALLOWED_AUTOMERGE_PR_AUTHOR ]; then
-    echo "Only ${ALLOWED_AUTOMERGE_PR_AUTHOR} is allowed to Auto-Merge. This PR is authored by ${GITHUB_PR_AUTHOR}. Exiting with -1..."
-    exit -1
+  if [ ${GITHUB_PR_AUTHOR} != ${ALLOWED_AUTOMERGE_PR_AUTHOR} ]; then
+    echo "Exiting without Auto-Merge. Only pull requests from ${ALLOWED_AUTOMERGE_PR_AUTHOR} are auto-merged. This PR is authored by ${GITHUB_PR_AUTHOR}."
+    exit 0
   fi
+
   echo "PR Author ${GITHUB_PR_AUTHOR} valid. Proceeding..."
 
   NETRC_FILE="$KOKORO_KEYSTORE_DIR"/73103_absl-federation-github-access_token_netrcfile
