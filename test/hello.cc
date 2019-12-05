@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <cstdlib>
 #include <string>
-#include "zlib.h"
+
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
+#include "zlib.h"
 
 namespace hello {
 
@@ -23,31 +25,37 @@ std::string Greet(absl::string_view person) {
   return absl::StrCat("Hello ", person);
 }
 
-std::string zCompress(std::string str_in ) {
+std::string zCompress(const std::string& str_in) {
+  z_stream defstream;
+  defstream.zalloc = Z_NULL;
+  defstream.zfree = Z_NULL;
+  defstream.opaque = Z_NULL;
+  if (deflateInit(&defstream, Z_BEST_COMPRESSION) != Z_OK) {
+    std::abort();
+  }
 
-    // placeholder for the compressed (deflated) version of str_in
-    char buf[50];
-    // compress str_in into b
+  defstream.avail_in = (uInt)str_in.size();
+  defstream.next_in = (Bytef *)str_in.data();
 
-    // zlib struct
-    z_stream defstream;
-    defstream.zalloc = Z_NULL;
-    defstream.zfree = Z_NULL;
-    defstream.opaque = Z_NULL;
-    // setup "a" as the input and "b" as the compressed output
-    defstream.avail_in = (uInt)strlen(str_in.c_str())+1; // size of input, string + terminator
-    defstream.next_in = (Bytef *)str_in.c_str(); // input char array
-    defstream.avail_out = (uInt)sizeof(buf); // size of output
-    defstream.next_out = (Bytef *)buf; // output char array
+  int ret = 0;
+  std::string output;
+  do {
+    char buf[64];
+    defstream.next_out = reinterpret_cast<Bytef*>(buf);
+    defstream.avail_out = sizeof(buf);
+    ret = deflate(&defstream, Z_FINISH);
+    if (output.size() < defstream.total_out) {
+      output.append(buf, defstream.total_out - output.size());
+    }
+  } while (ret == Z_OK);
 
-    // the actual compression work.
-    deflateInit(&defstream, Z_BEST_COMPRESSION);
-    deflate(&defstream, Z_FINISH);
-    deflateEnd(&defstream);
+  deflateEnd(&defstream);
 
-    return buf;
+  if (ret != Z_STREAM_END) {
+    std::abort();
+  }
+
+  return output;
 }
-
-
 
 }  // namespace hello
