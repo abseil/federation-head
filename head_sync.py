@@ -10,11 +10,15 @@ import urllib3
 urllib3.disable_warnings()
 
 HTTP_ARCHIVE_TEMPLATE = """    http_archive(
-      name = "{}",
-      urls = ["{}","{}"],  # {} use the same URL twice to trick bazel into re-trying if connection fails
+      name = "{}",  # {}
+      urls = [
+           # Use the same URL twice to trick bazel into re-trying if connection fails
+           "{}",
+           "{}"
+      ],
       strip_prefix = "{}-{}",
       sha256 = "{}",
-)"""
+    )"""
 
 http = urllib3.PoolManager()
 
@@ -44,11 +48,13 @@ class GitHubProject(ExternalDependency):
     request = http.request('GET', url,
                            headers = { 'User-Agent': 'Workspace Updater' })
     sha256 = hashlib.sha256(request.data).hexdigest()
-    return HTTP_ARCHIVE_TEMPLATE.format(project.name, url, url, date, project.repo,
-                                        commit, sha256)
+    return HTTP_ARCHIVE_TEMPLATE.format(project.name, date, url, url,
+                                        project.repo, commit, sha256)
 
 
 PROJECTS = [
+    GitHubProject('rules_cc', 'bazelbuild', 'rules_cc'),
+    GitHubProject('rules_python', 'bazelbuild', 'rules_python'),
     GitHubProject('com_google_absl', 'abseil', 'abseil-cpp'),
     GitHubProject('com_google_googletest', 'google', 'googletest'),
     GitHubProject('com_github_google_benchmark', 'google', 'benchmark'),
@@ -61,38 +67,13 @@ print("load(\"@bazel_tools//tools/build_defs/repo:http.bzl\", \"http_archive\")"
 print("")
 print ("def federation_deps():")
 
-print("    http_archive(")
-print("        name = \"rules_cc\",")
-print("        strip_prefix = \"rules_cc-master\",")
-print("      # Use the same URL twice to trick bazel into re-trying if connection fails")
-print("      urls = [")
-print("          \"https://github.com/bazelbuild/rules_cc/archive/master.zip\",")
-print("          \"https://github.com/bazelbuild/rules_cc/archive/master.zip\"")
-print("      ],")
-print("    )")
-
-print("")
-
-print("    http_archive(")
-print("        name = \"rules_python\",")
-print("        strip_prefix = \"rules_python-master\",")
-print("      # Use the same URL twice to trick bazel into re-trying if connection fails")
-print("      urls = [")
-print("          \"https://github.com/bazelbuild/rules_python/archive/master.zip\",")
-print("          \"https://github.com/bazelbuild/rules_python/archive/master.zip\"")
-print("      ],")
-print("    )")
-
-print("")
-
 for project in PROJECTS:
   retVal=project.workspace_rule()
-  print ("# ********** " +project.name + " *****************")
+  print ("    # ********** " +project.name + " *****************")
   print (retVal)
   print("")
 
-
-print("    # zlib pinned to 1.2.11")
+print("    # ********** zlib (pinned to 1.2.11) *****************")
 print("    http_archive(")
 print("      name = \"net_zlib\",")
 print("      build_file = \"@com_google_absl_oss_federation//:zlib.BUILD\",")
@@ -104,6 +85,3 @@ print("          \"https://zlib.net/zlib-1.2.11.tar.gz\",")
 print("          \"https://zlib.net/zlib-1.2.11.tar.gz\"")
 print("      ],")
 print("    )")
-
-
-
