@@ -12,10 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "absl/debugging/failure_signal_handler.h"
+#include "absl/strings/str_format.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "hello.h"
-#include <iostream>
 
 int main(int argc, const char** argv) {
-  std::cout << hello::Greet(argc < 2 ? "world" : argv[1]) << std::endl;
+  absl::InstallFailureSignalHandler(absl::FailureSignalHandlerOptions());
+
+  std::string greeting = hello::Greet(argc < 2 ? "world" : argv[1]);
+  absl::PrintF("%s\n", greeting);
+  absl::PrintF("The current time is %s\n", absl::FormatTime(absl::Now()));
+
   return 0;
 }

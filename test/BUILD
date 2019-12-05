@@ -41,11 +41,15 @@ cc_test(
     ],
 )
 
-cc_binary(
+# This could be cc_binary, but we'd like to run it as part of our automated
+# testing to be sure it doesn't crash.
+cc_test(
     name = "hello_main",
     srcs = ["hello_main.cc"],
     deps = [
         ":hello",
-        "@net_zlib//:zlib",
+        "@com_google_absl//absl/debugging:failure_signal_handler",
+        "@com_google_absl//absl/strings:str_format",
+        "@com_google_absl//absl/time",
     ],
 )
