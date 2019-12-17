@@ -29,26 +29,26 @@ def federation_deps():
 
     # ********** com_google_absl *****************
     http_archive(
-      name = "com_google_absl",  # 2019-12-12T20:37:13Z
+      name = "com_google_absl",  # 2019-12-16T20:25:20Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/abseil/abseil-cpp/archive/12bc53e0318d80569270a5b26ccbc62b52022b89.zip",
-           "https://github.com/abseil/abseil-cpp/archive/12bc53e0318d80569270a5b26ccbc62b52022b89.zip"
+           "https://github.com/abseil/abseil-cpp/archive/bf86cfe165ef7d70dfe68f0b8fc0c018bc79a577.zip",
+           "https://github.com/abseil/abseil-cpp/archive/bf86cfe165ef7d70dfe68f0b8fc0c018bc79a577.zip"
       ],
-      strip_prefix = "abseil-cpp-12bc53e0318d80569270a5b26ccbc62b52022b89",
-      sha256 = "2368aecaccdec409d6d9c27cf2ad6a5c7303b9b930b2bc7c3b848fa116865561",
+      strip_prefix = "abseil-cpp-bf86cfe165ef7d70dfe68f0b8fc0c018bc79a577",
+      sha256 = "a6e75ed9b236fe4290e30272d913db5fa7a3c6d565d9d10f22223316a7b59243",
     )
 
     # ********** com_google_googletest *****************
     http_archive(
-      name = "com_google_googletest",  # 2019-12-13T17:58:11Z
+      name = "com_google_googletest",  # 2019-12-16T21:03:59Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/google/googletest/archive/5b162a79d49d044690f3eb7d87ecc3b98a3f2e25.zip",
-           "https://github.com/google/googletest/archive/5b162a79d49d044690f3eb7d87ecc3b98a3f2e25.zip"
+           "https://github.com/google/googletest/archive/d166e09483845b9b6a658dccc3d3dbb293676b62.zip",
+           "https://github.com/google/googletest/archive/d166e09483845b9b6a658dccc3d3dbb293676b62.zip"
       ],
-      strip_prefix = "googletest-5b162a79d49d044690f3eb7d87ecc3b98a3f2e25",
-      sha256 = "63ed151256d3fbc8dc6848a525e2a398fbc22b4569bfb2f6d3dd781280d2ab1e",
+      strip_prefix = "googletest-d166e09483845b9b6a658dccc3d3dbb293676b62",
+      sha256 = "d27641a853c49d3e8d7b9bbced1ceb861336134cd148bf6db720a40ccde66516",
     )
 
     # ********** com_github_google_benchmark *****************
