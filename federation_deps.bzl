@@ -5,14 +5,14 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 def federation_deps():
     # ********** rules_cc *****************
     http_archive(
-      name = "rules_cc",  # 2019-12-05T16:49:55Z
+      name = "rules_cc",  # 2020-01-03T15:17:37Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/bazelbuild/rules_cc/archive/cd7e8a690caf526e0634e3ca55b10308ee23182d.zip",
-           "https://github.com/bazelbuild/rules_cc/archive/cd7e8a690caf526e0634e3ca55b10308ee23182d.zip"
+           "https://github.com/bazelbuild/rules_cc/archive/7e650b11fe6d49f70f2ca7a1c4cb8bcc4a1fe239.zip",
+           "https://github.com/bazelbuild/rules_cc/archive/7e650b11fe6d49f70f2ca7a1c4cb8bcc4a1fe239.zip"
       ],
-      strip_prefix = "rules_cc-cd7e8a690caf526e0634e3ca55b10308ee23182d",
-      sha256 = "7e5fd5d3b54217ee40d8488bbd70840456baafb3896782942ae4db1400a77657",
+      strip_prefix = "rules_cc-7e650b11fe6d49f70f2ca7a1c4cb8bcc4a1fe239",
+      sha256 = "682a0ce1ccdac678d07df56a5f8cf0880fd7d9e08302b8f677b92db22e72052e",
     )
 
     # ********** rules_python *****************
@@ -29,26 +29,26 @@ def federation_deps():
 
     # ********** com_google_absl *****************
     http_archive(
-      name = "com_google_absl",  # 2019-12-19T20:40:56Z
+      name = "com_google_absl",  # 2020-01-03T18:41:32Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/abseil/abseil-cpp/archive/ad904b6cd3906ddf79878003d92b7bc08d7786ae.zip",
-           "https://github.com/abseil/abseil-cpp/archive/ad904b6cd3906ddf79878003d92b7bc08d7786ae.zip"
+           "https://github.com/abseil/abseil-cpp/archive/1de0166368e2ae67347f92099d6dca3ab3a4a496.zip",
+           "https://github.com/abseil/abseil-cpp/archive/1de0166368e2ae67347f92099d6dca3ab3a4a496.zip"
       ],
-      strip_prefix = "abseil-cpp-ad904b6cd3906ddf79878003d92b7bc08d7786ae",
-      sha256 = "75c306e64aad95f68acd4d65806d3903379e6a52274230ca4e7fd03690813c24",
+      strip_prefix = "abseil-cpp-1de0166368e2ae67347f92099d6dca3ab3a4a496",
+      sha256 = "8f28a1f8c83707db0c2467e8c88b27b18c09f948e6e871fdf444024e32461fb1",
     )
 
     # ********** com_google_googletest *****************
     http_archive(
-      name = "com_google_googletest",  # 2019-12-16T21:03:59Z
+      name = "com_google_googletest",  # 2020-01-02T21:49:38Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/google/googletest/archive/d166e09483845b9b6a658dccc3d3dbb293676b62.zip",
-           "https://github.com/google/googletest/archive/d166e09483845b9b6a658dccc3d3dbb293676b62.zip"
+           "https://github.com/google/googletest/archive/306f3754a71d6d1ac644681d3544d06744914228.zip",
+           "https://github.com/google/googletest/archive/306f3754a71d6d1ac644681d3544d06744914228.zip"
       ],
-      strip_prefix = "googletest-d166e09483845b9b6a658dccc3d3dbb293676b62",
-      sha256 = "d27641a853c49d3e8d7b9bbced1ceb861336134cd148bf6db720a40ccde66516",
+      strip_prefix = "googletest-306f3754a71d6d1ac644681d3544d06744914228",
+      sha256 = "1bf944f13ebb58701e3ce99fc13509693aad60384dc2e1fa27f570ecb2412bdc",
     )
 
     # ********** com_github_google_benchmark *****************
