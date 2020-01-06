@@ -22,8 +22,8 @@ set -euox pipefail
 
 BUILD_ROOT="$(realpath $(dirname ${0})/..)"
 
-readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_gcc-latest:20190703"
-readonly CLANG_DOCKER="gcr.io/google.com/absl-177019/linux_clang-latest:20191018"
+readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_gcc-latest:20200102"
+readonly CLANG_DOCKER="gcr.io/google.com/absl-177019/linux_clang-latest:20200102"
 
 ################################### START TESTS ################################
 
