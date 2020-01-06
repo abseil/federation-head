@@ -13,12 +13,14 @@
 // limitations under the License.
 
 #include "absl/debugging/failure_signal_handler.h"
+#include "absl/debugging/symbolize.h"
 #include "absl/strings/str_format.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "hello.h"
 
 int main(int argc, const char** argv) {
+  absl::InitializeSymbolizer(argv[0]);
   absl::InstallFailureSignalHandler(absl::FailureSignalHandlerOptions());
 
   std::string greeting = hello::Greet(argc < 2 ? "world" : argv[1]);
