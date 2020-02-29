@@ -58,6 +58,7 @@ PROJECTS = [
     GitHubProject('com_google_absl', 'abseil', 'abseil-cpp'),
     GitHubProject('com_google_googletest', 'google', 'googletest'),
     GitHubProject('com_github_google_benchmark', 'google', 'benchmark'),
+    GitHubProject('com_github_google_tcmalloc', 'google', 'tcmalloc'),
 ]
 
 

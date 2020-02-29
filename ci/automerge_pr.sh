@@ -74,9 +74,17 @@ for std in ${STD}; do
 done
 
 
-echo "****** GCC FEDERATION TESTS ABSEIL, GOOGLETEST, BENCHMARK  **************"
+echo "****** GCC FEDERATION TESTS **************"
 for std in ${STD}; do
   echo "*** Testing for: ${std} ***"
+
+  if [ "${std}" = "c++17" ]; then
+    # As of 2020-02-28, TCMalloc requires C++17.
+    OTHER_TESTS="@com_github_google_tcmalloc//tcmalloc/...:all"
+  else
+    OTHER_TESTS=""
+  fi
+
   time docker run  \
   --volume="${BUILD_ROOT}:/repo_root:ro"  \
   --workdir=/repo_root/test \
@@ -89,6 +97,7 @@ for std in ${STD}; do
   @com_google_absl//absl/...:all \
   @com_google_googletest//googletest/...:all \
   @com_github_google_benchmark//test/...:all \
+  ${OTHER_TESTS} \
     --define absl=1 \
     --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
@@ -96,9 +105,17 @@ for std in ${STD}; do
     --test_output=errors
 done
 
-echo "****** CLANG FEDERATION TESTS ABSEIL, GOOGLETEST, BENCHMARK  ************"
+echo "****** CLANG FEDERATION TESTS ************"
 for std in ${STD}; do
   echo "*** Testing for: ${std} ***"
+
+  if [ "${std}" = "c++17" ]; then
+    # As of 2020-02-28, TCMalloc requires C++17.
+    OTHER_TESTS="@com_github_google_tcmalloc//tcmalloc/...:all"
+  else
+    OTHER_TESTS=""
+  fi
+
   time docker run  \
   --volume="${BUILD_ROOT}:/repo_root:ro"  \
   --workdir=/repo_root/test \
@@ -112,6 +129,7 @@ for std in ${STD}; do
   @com_google_absl//absl/...:all \
   @com_google_googletest//googletest/...:all \
   @com_github_google_benchmark//test/...:all \
+  ${OTHER_TESTS} \
     --define absl=1 \
     --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
