@@ -5,14 +5,14 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 def federation_deps():
     # ********** rules_cc *****************
     http_archive(
-      name = "rules_cc",  # 2020-03-10T11:40:22Z
+      name = "rules_cc",  # 2020-03-12T18:08:12Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/bazelbuild/rules_cc/archive/7fdc27c099bd6e30bf8e112923c8f1b86acd34af.zip",
-           "https://github.com/bazelbuild/rules_cc/archive/7fdc27c099bd6e30bf8e112923c8f1b86acd34af.zip"
+           "https://github.com/bazelbuild/rules_cc/archive/34ca16f4aa4bf2a5d3e4747229202d6cb630ebab.zip",
+           "https://github.com/bazelbuild/rules_cc/archive/34ca16f4aa4bf2a5d3e4747229202d6cb630ebab.zip"
       ],
-      strip_prefix = "rules_cc-7fdc27c099bd6e30bf8e112923c8f1b86acd34af",
-      sha256 = "4ff3cb8d2495235c2c69a7c73ed6208dd99bcf6fbb613c6e2a0ba9499d8321a7",
+      strip_prefix = "rules_cc-34ca16f4aa4bf2a5d3e4747229202d6cb630ebab",
+      sha256 = "523c59bb3f16518679668594c8874da46872fde05c32ba246bc0a35ec292f8a6",
     )
 
     # ********** rules_python *****************
@@ -29,14 +29,14 @@ def federation_deps():
 
     # ********** com_google_absl *****************
     http_archive(
-      name = "com_google_absl",  # 2020-03-10T17:59:49Z
+      name = "com_google_absl",  # 2020-03-12T16:46:00Z
       urls = [
            # Use the same URL twice to trick bazel into re-trying if connection fails
-           "https://github.com/abseil/abseil-cpp/archive/a877af1f294be0866eab2676effd46687acb3b11.zip",
-           "https://github.com/abseil/abseil-cpp/archive/a877af1f294be0866eab2676effd46687acb3b11.zip"
+           "https://github.com/abseil/abseil-cpp/archive/c6954897f7ece5011f0126db9117361dc1a6ff36.zip",
+           "https://github.com/abseil/abseil-cpp/archive/c6954897f7ece5011f0126db9117361dc1a6ff36.zip"
       ],
-      strip_prefix = "abseil-cpp-a877af1f294be0866eab2676effd46687acb3b11",
-      sha256 = "1cc35076a48ffa66634f8718d675f5b4edf11cc83d67b22a1b747d2eacd42220",
+      strip_prefix = "abseil-cpp-c6954897f7ece5011f0126db9117361dc1a6ff36",
+      sha256 = "7e081836753ffa09cafee52456aab5675cf4d641e31267f93afefaa63bec1cd4",
     )
 
     # ********** com_google_googletest *****************
