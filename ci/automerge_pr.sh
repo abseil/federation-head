@@ -22,8 +22,8 @@ set -euox pipefail
 
 BUILD_ROOT="$(realpath $(dirname ${0})/..)"
 
-readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_gcc-latest:20200102"
-readonly CLANG_DOCKER="gcr.io/google.com/absl-177019/linux_clang-latest:20200102"
+readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_gcc-latest:20200319"
+readonly CLANG_DOCKER="gcr.io/google.com/absl-177019/linux_clang-latest:20200401"
 
 ################################### START TESTS ################################
 
@@ -94,15 +94,18 @@ for std in ${STD}; do
   -e BAZEL_CXXOPTS="-std=${std}" \
   "${GCC_DOCKER}" \
   /usr/local/bin/bazel test \
-  @com_google_absl//absl/...:all \
-  @com_google_googletest//googletest/...:all \
-  @com_github_google_benchmark//test/...:all \
-  ${OTHER_TESTS} \
     --define absl=1 \
     --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
     --show_timestamps \
-    --test_output=errors
+    --test_output=errors \
+    -- \
+    @com_google_absl//absl/...:all \
+    @com_google_googletest//googletest/...:all \
+    @com_github_google_benchmark//test/...:all \
+    -@com_google_absl//absl/time/internal/cctz:time_zone_format_test \
+    -@com_google_absl//absl/time/internal/cctz:time_zone_lookup_test \
+    ${OTHER_TESTS}
 done
 
 echo "****** CLANG FEDERATION TESTS ************"
@@ -126,15 +129,18 @@ for std in ${STD}; do
   -e BAZEL_CXXOPTS="-std=${std}" \
   "${CLANG_DOCKER}" \
   /usr/local/bin/bazel test \
-  @com_google_absl//absl/...:all \
-  @com_google_googletest//googletest/...:all \
-  @com_github_google_benchmark//test/...:all \
-  ${OTHER_TESTS} \
     --define absl=1 \
     --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
     --show_timestamps \
-    --test_output=errors
+    --test_output=errors \
+    -- \
+    @com_google_absl//absl/...:all \
+    @com_google_googletest//googletest/...:all \
+    @com_github_google_benchmark//test/...:all \
+    -@com_google_absl//absl/time/internal/cctz:time_zone_format_test \
+    -@com_google_absl//absl/time/internal/cctz:time_zone_lookup_test \
+    ${OTHER_TESTS}
 done
 
 
