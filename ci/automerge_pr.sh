@@ -103,6 +103,7 @@ for std in ${STD}; do
     @com_google_absl//absl/...:all \
     @com_google_googletest//googletest/...:all \
     @com_github_google_benchmark//test/...:all \
+    @com_github_grpc_grpc//test/cpp/common/...:all \
     -@com_google_absl//absl/time/internal/cctz:time_zone_format_test \
     -@com_google_absl//absl/time/internal/cctz:time_zone_lookup_test \
     ${OTHER_TESTS}
@@ -138,6 +139,7 @@ for std in ${STD}; do
     @com_google_absl//absl/...:all \
     @com_google_googletest//googletest/...:all \
     @com_github_google_benchmark//test/...:all \
+    @com_github_grpc_grpc//test/cpp/common/...:all \
     -@com_google_absl//absl/time/internal/cctz:time_zone_format_test \
     -@com_google_absl//absl/time/internal/cctz:time_zone_lookup_test \
     ${OTHER_TESTS}
