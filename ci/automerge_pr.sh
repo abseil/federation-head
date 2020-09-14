@@ -22,8 +22,8 @@ set -euox pipefail
 
 BUILD_ROOT="$(realpath $(dirname ${0})/..)"
 
-readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_gcc-latest:20200319"
-readonly CLANG_DOCKER="gcr.io/google.com/absl-177019/linux_clang-latest:20200401"
+readonly GCC_DOCKER="gcr.io/google.com/absl-177019/linux_hybrid-latest:20200909"
+readonly CLANG_DOCKER="gcr.io/google.com/absl-177019/linux_hybrid-latest:20200909"
 
 ################################### START TESTS ################################
 
@@ -67,8 +67,10 @@ for std in ${STD}; do
   -e BAZEL_CXXOPTS="-std=${std}" \
   "${CLANG_DOCKER}" \
   /usr/local/bin/bazel test ... \
+    --copt="--gcc-toolchain=/usr/local" \
     --copt=-Werror \
     --keep_going \
+    --linkopt="--gcc-toolchain=/usr/local" \
     --show_timestamps \
     --test_output=errors
 done
@@ -129,9 +131,11 @@ for std in ${STD}; do
   -e BAZEL_CXXOPTS="-std=${std}" \
   "${CLANG_DOCKER}" \
   /usr/local/bin/bazel test \
+    --copt="--gcc-toolchain=/usr/local" \
     --define absl=1 \
     --test_tag_filters=-benchmark,-no_federation_test \
     --keep_going \
+    --linkopt="--gcc-toolchain=/usr/local" \
     --show_timestamps \
     --test_output=errors \
     -- \

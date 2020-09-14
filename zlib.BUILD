@@ -57,5 +57,6 @@ cc_library(
         "-Wno-implicit-function-declaration",
     ],
     includes = ["zlib/include/"],
+    defines = ["ZLIB_CONST"],
 )
 
