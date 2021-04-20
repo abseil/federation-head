@@ -59,6 +59,7 @@ PROJECTS = [
     GitHubProject('com_google_googletest', 'google', 'googletest'),
     GitHubProject('com_github_google_benchmark', 'google', 'benchmark'),
     GitHubProject('com_github_google_tcmalloc', 'google', 'tcmalloc'),
+    GitHubProject('com_github_grpc_grpc', 'grpc', 'grpc'),
 ]
 
 
